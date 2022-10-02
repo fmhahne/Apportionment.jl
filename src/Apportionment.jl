@@ -1,19 +1,30 @@
 module Apportionment
 
 export apportionment, divisor
+export SainteLague, DHondt
 
-function signpost(n::T) where {T<:Integer}
+struct SainteLague end
+struct DHondt end
+
+function signpost(n::T, method::SainteLague) where {T<:Integer}
     if n <= 0
         return 0.0
     end
-    return floor(n - 0.5) + 0.5
+    return n - 0.5
 end
 
-function apportionment(votes, size)
+function signpost(n::T, method::DHondt) where {T<:Integer}
+    if n <= 0
+        return 0.0
+    end
+    return n
+end
+
+function apportionment(votes, size, method=SainteLague())
     seats = zero(votes)
 
     while sum(seats) < size
-        quotients = @. votes / signpost(seats + 1)
+        quotients = broadcast((v, s) -> v / signpost(s + 1, method), votes, seats)
         next_seat = argmax(quotients)
         seats[next_seat] += 1
     end
@@ -21,9 +32,9 @@ function apportionment(votes, size)
     return seats
 end
 
-function divisor(votes, seats)
-    div_min = maximum(@. votes / signpost(seats + 1))
-    div_max = minimum(@. votes / signpost(seats))
+function divisor(votes, seats, method=SainteLague())
+    div_min = maximum(broadcast((v, s) -> v / signpost(s + 1, method), votes, seats))
+    div_max = minimum(broadcast((v, s) -> v / signpost(s, method), votes, seats))
 
     return round(Int, (div_min + div_max) / 2)
 end
