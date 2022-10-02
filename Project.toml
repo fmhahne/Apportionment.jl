@@ -1,0 +1,4 @@
+name = "Apportionment"
+uuid = "f8a4a616-cf80-42aa-b426-b81cf4398b07"
+authors = ["Fernando Miguel Hahne <fernandomhahne@gmail.com>"]
+version = "0.1.0"
