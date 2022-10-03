@@ -1,8 +1,8 @@
 # Apportionment
 
-Allocate seats to parties or constituencies using the [Saintë-Lague][] or the [D'Hondt][] method.
+Allocate seats to parties or constituencies using the [Sainte-Laguë][] or the [D'Hondt][] method.
 
-[Saintë-Lague]: https://en.wikipedia.org/wiki/Webster/Sainte-Lagu%C3%AB_method
+[Sainte-Laguë]: https://en.wikipedia.org/wiki/Webster/Sainte-Lagu%C3%AB_method
 [D'Hondt]: https://en.wikipedia.org/wiki/D%27Hondt_method
 
 ```julia
@@ -22,4 +22,19 @@ apportionment(votes, 8, DHondt())
 #  3
 #  1
 #  0
+```
+
+It is also possible to use [biproportional apportionment][]:
+
+[biproportional apportionment]: https://en.wikipedia.org/wiki/Biproportional_apportionment
+
+```julia
+votes = [770 130; 20 380; 10 190]
+marginals1 = apportionment(sum(votes; dims=1), 15)
+marginals2 = [7; 5; 3]
+seats = biproportional(votes, marginals1, marginals2)
+# 3×2 Matrix{Int64}:
+#  7  0
+#  1  4
+#  0  3
 ```
