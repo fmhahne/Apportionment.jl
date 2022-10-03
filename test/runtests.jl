@@ -20,3 +20,11 @@ end
     @test floor.(Int64, prevfloat.(votes / div_min)) == seats
     @test floor.(Int64, nextfloat.(votes / div_max)) == seats
 end
+
+@testset "Biproportional Saintë-Lague method" begin
+    votes = [770 130; 20 380; 10 190]
+    marginals1 = apportionment(sum(votes; dims=1), 15)
+    marginals2 = [7; 5; 3]
+    seats = biproportional(votes, marginals1, marginals2, SainteLague())
+    @test seats == [7 0; 1 4; 0 3]
+end
