@@ -1,7 +1,7 @@
 using Test
 using Apportionment
 
-@testset "Saintë-Lague method" begin
+@testset "Sainte-Laguë method" begin
     votes = [10, 8, 3, 2]
     seats = apportionment(votes, 8)
     div_min, div_max = divisors(votes, seats)
@@ -21,7 +21,7 @@ end
     @test floor.(Int64, nextfloat.(votes / div_max)) == seats
 end
 
-@testset "Biproportional Saintë-Lague method" begin
+@testset "Biproportional Sainte-Laguë method" begin
     votes = [770 130; 20 380; 10 190]
     marginals1 = apportionment(sum(votes; dims=1), 15)
     marginals2 = [7; 5; 3]

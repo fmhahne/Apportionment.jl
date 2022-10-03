@@ -1,8 +1,8 @@
 # Apportionment
 
-Allocate seats to parties or constituencies using the [Saintë-Lague][] or the [D'Hondt][] method.
+Allocate seats to parties or constituencies using the [Sainte-Laguë][] or the [D'Hondt][] method.
 
-[Saintë-Lague]: https://en.wikipedia.org/wiki/Webster/Sainte-Lagu%C3%AB_method
+[Sainte-Laguë]: https://en.wikipedia.org/wiki/Webster/Sainte-Lagu%C3%AB_method
 [D'Hondt]: https://en.wikipedia.org/wiki/D%27Hondt_method
 
 ```julia
