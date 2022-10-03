@@ -23,3 +23,18 @@ apportionment(votes, 8, DHondt())
 #  1
 #  0
 ```
+
+It is also possible to use [biproportional apportionment][]:
+
+[biproportional apportionment]: https://en.wikipedia.org/wiki/Biproportional_apportionment
+
+```julia
+votes = [770 130; 20 380; 10 190]
+marginals1 = apportionment(sum(votes; dims=1), 15)
+marginals2 = [7; 5; 3]
+seats = biproportional(votes, marginals1, marginals2)
+# 3×2 Matrix{Int64}:
+#  7  0
+#  1  4
+#  0  3
+```
