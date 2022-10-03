@@ -22,6 +22,9 @@ function signpost(n::T, method::DHondt) where {T<:Integer}
     end
 end
 
+rounding(x::T, method::SainteLague) where {T<:Real} = round(Int64, x)
+rounding(x::T, method::DHondt) where {T<:Real} = floor(Int64, x)
+
 function apportionment(votes, num, method=SainteLague())
     seats = zeros(Int64, size(votes))
 
@@ -41,7 +44,7 @@ function divisors(votes, seats, method=SainteLague())
     return (div_min, div_max)
 end
 
-function biproportional(votes, marginals1, marginals2, method::SainteLague; max_iters=100)
+function biproportional(votes, marginals1, marginals2, method=SainteLague(); max_iters=100)
     seats = zero(votes)
     N1, N2 = size(votes)
 
@@ -70,7 +73,7 @@ function biproportional(votes, marginals1, marginals2, method::SainteLague; max_
         end
 
         weights = votes ./ (divisors1 * divisors2)
-        seats = round.(Int64, weights)
+        seats = broadcast(w -> rounding(w, method), weights)
         count += 1
     end
 
