@@ -1,9 +1,10 @@
 # Apportionment
 
-Allocate seats to parties or constituencies using the [Sainte-Laguë][] or the [D'Hondt][] method.
+Allocate seats to parties or constituencies using the [Sainte-Laguë][], [D'Hondt][], or [Huntington–Hill][] method.
 
 [Sainte-Laguë]: https://en.wikipedia.org/wiki/Webster/Sainte-Lagu%C3%AB_method
 [D'Hondt]: https://en.wikipedia.org/wiki/D%27Hondt_method
+[Huntington–Hill]: https://en.wikipedia.org/wiki/Huntington%E2%80%93Hill_method
 
 ```julia
 using Apportionment
@@ -22,9 +23,16 @@ apportionment(votes, 8, DHondt())
 #  3
 #  1
 #  0
+
+apportionment(votes, 8, HuntingtonHill())
+# 4-element Vector{Int64}:
+#  3
+#  3
+#  1
+#  1
 ```
 
-It is also possible to use [biproportional apportionment][]:
+It is also possible to use [biproportional apportionment][] with the Sainte-Laguë or D'Hondt methods:
 
 [biproportional apportionment]: https://en.wikipedia.org/wiki/Biproportional_apportionment
 

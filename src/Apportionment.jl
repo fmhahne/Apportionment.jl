@@ -1,10 +1,11 @@
 module Apportionment
 
 export apportionment, divisors, biproportional
-export SainteLague, DHondt
+export SainteLague, DHondt, HuntingtonHill
 
 struct SainteLague end
 struct DHondt end
+struct HuntingtonHill end
 
 function signpost(n::T, method::SainteLague) where {T<:Integer}
     if n <= 0
@@ -19,6 +20,14 @@ function signpost(n::T, method::DHondt) where {T<:Integer}
         return 0
     else
         return n
+    end
+end
+
+function signpost(n::T, method::HuntingtonHill) where {T<:Integer}
+    if n <= 0
+        return 0
+    else
+        return sqrt(n * (n - 1))
     end
 end
 
