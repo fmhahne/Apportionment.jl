@@ -21,6 +21,13 @@ end
     @test floor.(Int64, nextfloat.(votes / div_max)) == seats
 end
 
+@testset "Huntington-Hill method" begin
+    votes = [10, 8, 3]
+    seats = apportionment(votes, 8)
+
+    @test seats == [4, 3, 1]
+end
+
 @testset "Biproportional Sainte-Laguë method" begin
     votes = [770 130; 20 380; 10 190]
     marginals1 = apportionment(sum(votes; dims=1), 15)
