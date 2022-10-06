@@ -2,6 +2,8 @@ module Apportionment
 
 export apportionment, divisors, biproportional
 export SainteLague, DHondt, HuntingtonHill
+export largest_remainder, quota
+export Hare, Droop, HagenbachBischoff
 
 struct SainteLague end
 struct DHondt end
@@ -51,6 +53,26 @@ function divisors(votes, seats, method=SainteLague())
     div_max = minimum(broadcast((v, s) -> v / signpost(s, method), votes, seats))
 
     return (div_min, div_max)
+end
+
+struct Droop end
+struct Hare end
+struct HagenbachBischoff end
+
+quota(total_votes, total_seats, method::Droop) = floor(Int64, total_votes / (total_seats + 1)) + 1
+quota(total_votes, total_seats, method::Hare) = total_votes / total_seats
+quota(total_votes, total_seats, method::HagenbachBischoff) = total_votes / (total_seats + 1)
+
+function largest_remainder(votes, num, method=Droop())
+    q = votes / quota(sum(votes), num, method)
+    seats = floor.(Int64, q)
+
+    while sum(seats) < num
+        next_seat = argmax(q - seats)
+        seats[next_seat] += 1
+    end
+
+    return seats
 end
 
 function biproportional(votes, marginals1, marginals2, method=SainteLague(); max_iters=100)

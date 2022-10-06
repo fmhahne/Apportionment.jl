@@ -43,3 +43,15 @@ end
     seats = biproportional(votes, marginals1, marginals2, DHondt())
     @test seats == [7 0; 1 4; 0 3]
 end
+
+@testset "Hare quota" begin
+    votes = [47000, 16000, 15800, 12000, 6100, 3100]
+    seats = largest_remainder(votes, 10, Hare())
+    @test seats == [5, 2, 1, 1, 1, 0]
+end
+
+@testset "Droop quota" begin
+    votes = [47000, 16000, 15800, 12000, 6100, 3100]
+    seats = largest_remainder(votes, 10, Droop())
+    @test seats == [5, 2, 2, 1, 0, 0]
+end
