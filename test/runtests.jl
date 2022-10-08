@@ -11,6 +11,12 @@ using Apportionment
     @test round.(Int64, nextfloat.(votes / div_max)) == seats
 end
 
+@testset "Dictionary argument" begin
+    votes = Dict("A" => 10, "B" => 8, "C" => 3, "D" => 2)
+    seats = apportionment(votes, 8)
+    @test seats == Dict("A" => 3, "B" => 3, "C" => 1, "D" => 1)
+end
+
 @testset "D'Hondt method" begin
     votes = [10, 8, 3, 2]
     seats = apportionment(votes, 8, DHondt())

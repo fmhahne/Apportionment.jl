@@ -48,6 +48,13 @@ function apportionment(votes, num, method=SainteLague())
     return seats
 end
 
+function apportionment(dict::T, num, method) where {T<:AbstractDict}
+    parties = keys(dict)
+    votes = collect(values(dict))
+    seats = apportionment(values(votes), num, method)
+    return Dict(zip(parties, seats))
+end
+
 function divisors(votes, seats, method=SainteLague())
     div_min = maximum(broadcast((v, s) -> v / signpost(s + 1, method), votes, seats))
     div_max = minimum(broadcast((v, s) -> v / signpost(s, method), votes, seats))
