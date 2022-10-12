@@ -1,5 +1,7 @@
 # Apportionment
 
+![CI badge](https://github.com/fmhahne/Apportionment.jl/actions/workflows/CI.yml/badge.svg)
+
 Allocate seats to parties or constituencies using the [Sainte-Laguë][], [D'Hondt][], or [Huntington–Hill][] method.
 
 [Sainte-Laguë]: https://en.wikipedia.org/wiki/Webster/Sainte-Lagu%C3%AB_method
