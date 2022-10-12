@@ -66,9 +66,17 @@ struct Droop end
 struct Hare end
 struct HagenbachBischoff end
 
-quota(total_votes, total_seats, method::Droop) = floor(Int64, total_votes / (total_seats + 1)) + 1
-quota(total_votes, total_seats, method::Hare) = total_votes / total_seats
-quota(total_votes, total_seats, method::HagenbachBischoff) = total_votes / (total_seats + 1)
+function quota(total_votes, total_seats, method::Droop)
+    return floor(Int64, total_votes / (total_seats + 1)) + 1
+end
+
+function quota(total_votes, total_seats, method::Hare)
+    return total_votes / total_seats
+end
+
+function quota(total_votes, total_seats, method::HagenbachBischoff)
+    return total_votes / (total_seats + 1)
+end
 
 function largest_remainder(votes, num, method=Droop())
     q = votes / quota(sum(votes), num, method)
@@ -95,7 +103,8 @@ function biproportional(votes, marginals1, marginals2, method=SainteLague(); max
     divisors2 = ones(Float64, 1, N2)
 
     count = 1
-    while (sum(seats; dims=1) != marginals1 || sum(seats; dims=2) != marginals2) && count <= max_iters
+    while (sum(seats; dims=1) != marginals1 || sum(seats; dims=2) != marginals2) &&
+        count <= max_iters
         if isodd(count)
             for i in axes(votes, 1)
                 weights = votes ./ (oneunit.(divisors1) * divisors2)
