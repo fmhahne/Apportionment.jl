@@ -1,8 +1,7 @@
 module Apportionment
 
-export apportionment, divisors, biproportional
+export apportionment, divisors, quota, biproportional
 export SainteLague, DHondt, HuntingtonHill
-export largest_remainder, quota
 export Hare, Droop, HagenbachBischoff
 
 struct SainteLague end
