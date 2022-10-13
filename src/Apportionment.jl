@@ -62,9 +62,10 @@ function divisors(votes, seats, method=SainteLague())
     return (div_min, div_max)
 end
 
-struct Droop end
-struct Hare end
-struct HagenbachBischoff end
+abstract type LargestRemainderMethod end
+struct Droop <: LargestRemainderMethod end
+struct Hare <: LargestRemainderMethod end
+struct HagenbachBischoff <: LargestRemainderMethod end
 
 function quota(total_votes, total_seats, method::Droop)
     return floor(Int64, total_votes / (total_seats + 1)) + 1
@@ -78,7 +79,7 @@ function quota(total_votes, total_seats, method::HagenbachBischoff)
     return total_votes / (total_seats + 1)
 end
 
-function largest_remainder(votes, num, method=Droop())
+function apportionment(votes, num, method::LargestRemainderMethod)
     q = votes / quota(sum(votes), num, method)
     seats = floor.(Int64, q)
 
